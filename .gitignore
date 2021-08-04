@@ -1,0 +1,5 @@
+/venv
+venv
+/knwopt.egg-info
+knwopt.egg-info
+*__pycache__
