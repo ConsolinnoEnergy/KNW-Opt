@@ -3,3 +3,5 @@ venv
 /knwopt.egg-info
 knwopt.egg-info
 *__pycache__
+/.vscode
+.vscode
