@@ -4,7 +4,7 @@ setup(
     name="knwopt",
     version="0.0.1",
     description="Dispatcher for heat pump swarm",
-    author="Consolinno AI",
+    author="ConsolinnoEnergy",
     author_email="info@consolinno.de",
     license="MIT License",
     packages=find_packages(),
