@@ -7,6 +7,7 @@ import pandas as pd
 
 
 class Swarm:
+    
     def __init__(self,houses:list):
         n = None
         freq = None
@@ -25,6 +26,8 @@ class Swarm:
             counter +=1
 
         self.houses = houses
+        self.pdstate = pd.DataFrame(columns=self.state_names) 
+
 
     @property
     def state_names(self):
@@ -38,31 +41,41 @@ class Swarm:
         infos = {}
         rewards = 0
         _states = []
+        __states = []
 
         for house in self.houses:
             state, reward, done, info = house.policy()
+            __states.append(self.pdstate)
             rewards += reward
             dones.append(done)
             _states.append(state)
             infos.update(info)
-        self.state = np.concatenate(_states)
+        self.pdstate = pd.concat(__states)
+        states = np.concatenate(_states)
+        
    
-        return self.state, rewards, any(dones), infos 
+        return states, rewards, any(dones), infos 
 
     @property
     def count(self):
         for house in self.houses:
             return house.count
     @property
-    def pdstate(self):
-        return pd.DataFrame(self.state, index=self.state_names, columns=[self.count] ).T
+    def current_time(self):
+        for house in self.houses:
+            return house.load.index[house.count]
+
+  
 
     def reset(self):   
         _states= []
+        __states = []
         for house in self.houses:
             _states.append(house.reset())
-        self.state = np.concatenate(_states)
-        return self.state
+            __states.append(house.pdstate)
+        states = np.concatenate(_states)
+        self.pdstate = pd.concat(__states)
+        return states
     
     def request_potential(self):
         self.portfolio = {}

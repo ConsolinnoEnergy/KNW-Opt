@@ -36,7 +36,11 @@ class House:
         self.count = 0
         self.T = (self.T_max - self.T_min) * self.initial_level  + self.T_min
         self.endurance = self.min_down
-        self.state = np.array([self.T, self.load_thermal, self.power_thermal * self.heating, self.available])
+        self.state = pd.Series(
+            np.array([self.T, self.load_thermal, self.power_thermal * self.heating, self.available]),
+            index = self.state_names
+            )
+        self.state.name = self.load.index[self.count]
         self.count += 1
         return self.state 
 
@@ -64,7 +68,11 @@ class House:
 
         self.heating = action 
 
-        self.state = np.array([self.T, self.load_thermal, self.power_thermal * self.heating, self.available])
+        self.state = pd.Series(
+            np.array([self.T, self.load_thermal, self.power_thermal * self.heating, self.available]),
+            index = self.state_names
+            )
+        self.state.name = self.load.index[self.count]
         self.count += 1
         done = False
         if self.count >= len(self.load):
@@ -72,11 +80,11 @@ class House:
         reward  = 0
         info = {}
         
-        return self.state, reward, done, info
+        return self.state.values, reward, done, info
 
     @property
     def pdstate(self):
-        return pd.DataFrame(self.state, index = self.state_names, columns=[self.count]).T
+        return pd.DataFrame(self.state).T
 
     @property
     def available(self):
