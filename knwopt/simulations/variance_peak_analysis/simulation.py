@@ -9,6 +9,10 @@ from time import time
 N = 5
 # number of simulated timesteps
 K = 24 * 7# one day
+
+# target directory for saving simulations as csv files
+CSV_PATH = None
+
 timestamp  =pd.date_range(start="2021-01-01", freq="60Min", periods= K)
 load = pd.Series([5.]*K,index=timestamp)
 
@@ -38,15 +42,8 @@ def simulate(n:int, dispatch=True):
         else:
             state, reward, done, info = swarm.step()
         df = pd.concat([df, swarm.pdstate])
-   
-    df = df.filter(like="power_thermal", axis=1).sum(axis=1)
-    std = df.std()
-    mean = df.mean()
-    maximum = df.max()
-    minimum = df.min()
-    q_value = df.quantile(q=0.9)
+    return df
 
-    return mean, std, maximum, minimum, q_value
 
 table = pd.DataFrame(columns=["number_of_houses","computation_time","steps"])
 d = {
@@ -60,7 +57,13 @@ d = {
     }
 for i in range(1,4):
     for dispatching in [True,False]:
-        mean, std, maximum, minimum, q_value = simulate(N**i, dispatch= dispatching)
+        df_simulation = simulate(N**i, dispatch= dispatching)
+        df = df_simulation.filter(like="power_thermal", axis=1).sum(axis=1)
+        std = df.std()
+        mean = df.mean()
+        maximum = df.max()
+        minimum = df.min()
+        q_value = df.quantile(q=0.9)
         d["mean"].append(mean)
         d["standard_deviation"].append(std)
         d["minimum"].append(minimum)
@@ -68,6 +71,10 @@ for i in range(1,4):
         d["q_value"].append(q_value)
         d["number_of_houses"].append(N**i)
         d["dispatching"].append(dispatching)
+        if CSV_PATH is not None:
+            disp_str = "dispatch" if dispatching else "no_dispatch"
+            path = os.path.join(CSV_PATH, f"simulation_{disp_str}_{N**i}.csv")
+            df_simulation.to_csv(path)
     
 
 d = pd.DataFrame(d)
