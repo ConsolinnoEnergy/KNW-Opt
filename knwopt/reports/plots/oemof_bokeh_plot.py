@@ -7,7 +7,7 @@ import pandas as pd
 
 
 # path to csv file or to directory containing csv files,
-# default: /KNW-OPT
+# default: /KNW-OPT/knwopt/data/oemof_results
 CSV_PATH = os.path.join(os.getcwd(), "knwopt", "data", "oemof_results")
 
 # target directory to save plot as html file
@@ -18,7 +18,7 @@ PLOT_NTP = True
 
 # plot hepu output with rolling mean and amount of examplary
 # hepus stated in `AMOUNT_HEPUS`
-PLOT_HEPUS = True
+PLOT_HEPUS = False
 AMOUNT_HEPUS = 5
 
 def plot_ntp(csv_file: str, html_file: str):
