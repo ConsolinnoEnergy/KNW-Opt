@@ -18,7 +18,7 @@ PLOT_NTP = True
 
 # plot hepu output with rolling mean and amount of examplary
 # hepus stated in `AMOUNT_HEPUS`
-PLOT_HEPUS = True
+PLOT_HEPUS = False
 AMOUNT_HEPUS = 5
 
 def plot_ntp(csv_file: str, html_file: str):
