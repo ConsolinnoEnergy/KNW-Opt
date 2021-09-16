@@ -41,16 +41,17 @@ class Swarm:
         infos = {}
         rewards = 0
         _states = []
-        __states = []
+        _states_ = []
 
         for house in self.houses:
             state, reward, done, info = house.policy()
-            __states.append(self.pdstate)
+            _states_.append(house.pdstate)
             rewards += reward
             dones.append(done)
             _states.append(state)
             infos.update(info)
-        self.pdstate = pd.concat(__states)
+        self.pdstate = pd.concat(_states_,axis=1)
+        self.pdstate.columns = self.state_names
         states = np.concatenate(_states)
         
    
