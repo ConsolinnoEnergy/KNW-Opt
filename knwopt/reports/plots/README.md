@@ -62,7 +62,7 @@ Es müssen 5 Werte gesetzt, bzw. angepasst werden:
   
   Default: `5`
 
-Sind diese richtig gesetzt, kann das Skript einfach ausgeführt werden.
+Sind diese richtig gesetzt, kann das Skript einfach ausgeführt werden (Beachte Sektion __Daten__!).
 
 ### __NTP Plot__
 
