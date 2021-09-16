@@ -16,8 +16,19 @@ HTML_DIR = os.path.join(os.getcwd(), "knwopt", "reports", "plots")
 AMOUNT_HOUSES = 5
 
 def create_html_plot(csv_file: str, html_file: str):
+    """plots aggregated output of all hepus and its rolling mean in a
+    window of 24 h. Also examplary hepus are ploted as stated in `AMOUNT_HOUSES`
+
+    Parameters
+    ----------
+    csv_file : str
+        path to csv file with oemof data
+    html_file : str
+        path to target html bokeh plot
+    """
     # load data
     df = pd.read_csv(csv_file, index_col=0)
+    df.index = pd.to_datetime(df.index)
 
     # get only thermal data
     df_power_thermal = df.filter(like='power_thermal', axis=1)
@@ -31,11 +42,11 @@ def create_html_plot(csv_file: str, html_file: str):
 
     # declare bokeh figure
     heatpumps_fig = figure(
-        title=f"Heatpumps KNW-Opt",
+        title=f"Dispatcher Rolling Mean",
         sizing_mode="stretch_width",
         background_fill_color="#fafafa",
         x_axis_type="datetime",
-        y_axis_label="Thermal Power in kW",
+        y_axis_label="Leistung in kW",
         tools="wheel_zoom, box_zoom, reset, pan"
     )
 
@@ -45,7 +56,7 @@ def create_html_plot(csv_file: str, html_file: str):
         power_per_timestep,
         line_width=2,
         color="#008B29",
-        legend_label="Aggregated Heat"
+        legend_label="Aggregierte Wärme"
     )
 
     # plot rolling mean
@@ -77,18 +88,19 @@ def create_html_plot(csv_file: str, html_file: str):
     heatpumps_fig.legend.click_policy="hide"
 
     # save as html file
-    output_file(html_file, title="Simulation Analysis")
+    output_file(html_file, title="Dispatcher Rolling Mean")
     save(heatpumps_fig, html_file)
     
 
 if __name__ == "__main__":
     if os.path.isfile(CSV_PATH):
-        csv_file = pathlib.Path(CSV_PATH).stem
-        html_file = os.path.join(HTML_DIR, f"plot_{csv_file}.html")
+        csv_name = pathlib.Path(CSV_PATH).stem
+        html_file = os.path.join(HTML_DIR, f"plot_{csv_name}.html")
         create_html_plot(CSV_PATH, html_file)
     else:
         csv_files = [file for file in os.listdir(CSV_PATH) if file.endswith(".csv")]
         for file in csv_files:
-            csv_file = pathlib.Path(file).stem
-            html_file = os.path.join(HTML_DIR, f"plot_{csv_file}.html")
-            create_html_plot(file, html_file)
+            csv_name = pathlib.Path(file).stem
+            html_file = os.path.join(HTML_DIR, f"plot_{csv_name}.html")
+            csv_path = os.path.join(CSV_PATH, file)
+            create_html_plot(csv_path, html_file)
