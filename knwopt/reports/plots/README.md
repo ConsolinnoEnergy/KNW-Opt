@@ -96,6 +96,12 @@ Das kann natürlich im `if __name__ == "__main__":` Block angepasst werden.
 
 ### Daten
 
-Die ursprünglichen Daten sind im Gitlab Repository Energy System Analysis Projects unter [KNW-Opt/oemof/results](https://gitlab.consolinno-it.de/flexa/energy-system-analysis/energy-system-analysis-projects/-/tree/master/KNW-Opt/oemof/results) zu finden.
+Die ursprünglichen Daten sind im Gitlab Repository [Energy System Analysis Projects](https://gitlab.consolinno-it.de/flexa/energy-system-analysis/energy-system-analysis-projects) unter [KNW-Opt/oemof/results](https://gitlab.consolinno-it.de/flexa/energy-system-analysis/energy-system-analysis-projects/-/tree/master/KNW-Opt/oemof/results) zu finden.
 
-Die wichtigen Dateien wurden in dieses Projekt kopiert, zu finden hier: [KNW-Opt/knwopt/data/oemof_results](https://github.com/ConsolinnoEnergy/KNW-Opt/tree/main/knwopt/data/oemof_results)
+Die wichtigen Dateien wurden in dieses Projekt kopiert, zu finden hier: [KNW-Opt/knwopt/data/oemof_results](https://github.com/ConsolinnoEnergy/KNW-Opt/tree/main/knwopt/data/oemof_results).
+
+Auf Grund der Dateigrößeneinschränkung von Github __fehlen 2 CSV Dateien__ in diesem Projekt:
+- [solution_1_day_steps_hepus_150.csv](https://gitlab.consolinno-it.de/flexa/energy-system-analysis/energy-system-analysis-projects/-/blob/master/KNW-Opt/oemof/results/solution_1_day_steps_hepus_150.csv)
+- [solution_1_day_steps_hepus_200.csv](https://gitlab.consolinno-it.de/flexa/energy-system-analysis/energy-system-analysis-projects/-/blob/master/KNW-Opt/oemof/results/solution_1_day_steps_hepus_200.csv)
+
+Diese Dateien bitte extra runterladen. Insgesamt sind es also __8__ CSV Dateien.
