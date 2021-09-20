@@ -66,6 +66,69 @@ Desweiteren ist algorithmishe Modell sparsam mit Daten und Berechnungen. Die Wä
 
 Um den oben beschriebenen Algorithmus zu testen und zu überprüfen, ob er unser Ziel der Lastspitzenvermeidung realisiert wurde eine Simualtionsumgebung entwickelt. Sie orientiert sich an Agenten basierten Simuationen, realisert aber Häuser und Leitzentrale nicht als selbstständige Software-Agenten/Programme.
 
+Es handelt sich um eine Simulation x Häusern. Die Wärmepumpen haben eine Leistung von x kW und einen mittleren cop von x. Der thermische Jahresenergiebedarf der Häuser ist  x kWh.
+
+Die Ergebnisse einer klassischen Hysterese-Regelung sehen wir hier
+
+
+hier plot von simulate.py mit dispatching = False
+
+
+Mittlere aggregierte Leistung:
+
+Standardabweichung der aggregierten Leistung:
+
+Maximum der aggregierten Leistung:
+
+Minimum der aggregierten Leistung:
+
+90%-Qunatil der Aggregierten Leistung:
+
+
+
+Die Ergebnisse Refelung mit Dispatching auf den rolling Mean sehen wir hier
+
+
+hier plot von simulate.py mit dispatching = True
+
+
+Mittlere aggregierte Leistung:
+
+Standardabweichung der aggregierten Leistung:
+
+Maximum der aggregierten Leistung:
+
+Minimum der aggregierten Leistung:
+
+90%-Qunatil der Aggregierten Leistung:
+
+## Performance des Dispatching auf den Rolling Mean
+
+Es wurde eine Performanzanalyse des Dispatching algorithmus durchgeführt:
+
+
+Prozessor		: AMD Ryzen 7 4700U with Radeon Graphics
+
+Hauptspeicher		: 15657MB 
+
+
+|number_of_houses|computation_time|steps|
+|----------------|----------------|-----|
+|5|0.374|24|
+|25|0.607|24|
+|125|1.416|24|
+|625|5.648|24|
+|3125|28.093|24|
+|15625|141.250|24|
+
+Man sieht, dass der Algorithmus für sehr große Wärmepumpenschwärme geeignet ist. 
+
+## Fazit Simulation
+
+Die Simulationsergebnisse zeigen deutlich, dass durch Dispatching auf den Rolling Mean das Ziel der Peakvermeidung realisiert werden kann. Desweiteren stellt es eine Software technisch leicht umzusettende Lösung dar, welche gut in der Größe der Wärmepumpenschwärme skaliert.
+
+
+
 
 
 
