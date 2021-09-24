@@ -1,13 +1,15 @@
 import os
 import pathlib
 
+from bokeh.io import export_png
+from bokeh.io.export import get_screenshot_as_png
 from bokeh.palettes import viridis
 from bokeh.plotting import figure, output_file, save
 import pandas as pd
 
 
-# path to csv file or to directory containing csv files, default: /KNW-OPT
-CSV_PATH = os.getcwd()
+# path to csv file or to directory containing csv files
+CSV_PATH = os.path.join(os.getcwd(), "knwopt", "data", "jay_simulation_dispatch_60min_49x2houses.csv")
 
 # target directory to save plot as html file
 HTML_DIR = os.path.join(os.getcwd(), "knwopt", "reports", "plots")
@@ -15,20 +17,21 @@ HTML_DIR = os.path.join(os.getcwd(), "knwopt", "reports", "plots")
 # how many houses should be plotted (up to 256)
 AMOUNT_HOUSES = 5
 
-def create_html_plot(csv_file: str, html_file: str):
+def create_html_plot(csv_file: str, plot_filename: str):
     """plots aggregated output of all hepus and its rolling mean in a
-    window of 24 h. Also examplary hepus are ploted as stated in `AMOUNT_HOUSES`
+    window of 24 h. Also examplary hepus are ploted as specified in `AMOUNT_HOUSES`
 
     Parameters
     ----------
     csv_file : str
         path to csv file with oemof data
-    html_file : str
-        path to target html bokeh plot
+    plot_filename : str
+        path to target bokeh plot
     """
     # load data
     df = pd.read_csv(csv_file, index_col=0)
-    df.index = pd.to_datetime(df.index)
+    index = pd.DatetimeIndex(pd.date_range(start="2021-01-01", freq="60Min", periods=len(df)))
+    df.index = pd.to_datetime(index)
 
     # get only thermal data
     df_power_thermal = df.filter(like='power_thermal', axis=1)
@@ -85,22 +88,24 @@ def create_html_plot(csv_file: str, html_file: str):
         )
 
     # allow to hide lines
-    heatpumps_fig.legend.click_policy="hide"
+    heatpumps_fig.legend.click_policy = "hide"
+    heatpumps_fig.legend.location = "top_center"
 
-    # save as html file
-    output_file(html_file, title="Dispatcher Rolling Mean")
-    save(heatpumps_fig, html_file)
+    # save as html and png file
+    output_file(plot_filename + ".html", title="Dispatcher Rolling Mean")
+    save(heatpumps_fig, plot_filename + ".html")
+    export_png(heatpumps_fig, filename=plot_filename + ".png")
     
 
 if __name__ == "__main__":
     if os.path.isfile(CSV_PATH):
         csv_name = pathlib.Path(CSV_PATH).stem
-        html_file = os.path.join(HTML_DIR, f"plot_{csv_name}.html")
-        create_html_plot(CSV_PATH, html_file)
+        plot_filename = os.path.join(HTML_DIR, f"plot_{csv_name}")
+        create_html_plot(CSV_PATH, plot_filename)
     else:
         csv_files = [file for file in os.listdir(CSV_PATH) if file.endswith(".csv")]
         for file in csv_files:
             csv_name = pathlib.Path(file).stem
-            html_file = os.path.join(HTML_DIR, f"plot_{csv_name}.html")
+            plot_filename = os.path.join(HTML_DIR, f"plot_{csv_name}")
             csv_path = os.path.join(CSV_PATH, file)
-            create_html_plot(csv_path, html_file)
+            create_html_plot(csv_path, plot_filename)
