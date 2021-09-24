@@ -5,6 +5,7 @@
 In KNW-Opt sollen unterschiedliche Optimierungsmaßnahmen eines kalten Nahwärmenetzes untersucht werden.
 Eine Maßnahme soll die elektrische Lastspitzenvermeidung des Wärmepumpenschwarms sein. Hierbei sollte möglichst
 das gleichzeitige Anlaufen von vielen Wärmepumpenvermieden werden. Da die Wärmepumpen über Warmwasserspeicher verfügen, steht hier eine energetische Flexibilität zur Verfügung, welche eine gezielte Koordination der Wärmepumpen ermöglichen sollte, um Lastspitzen zu vermeiden.
+
 ## Lastspitzen im KNW-Netz glätten
 
 Eines der erklärten Ziele ist das Glätten elektrischer Lastspitzen im kalten Nahwäremenetz. Doch was soll Ausglätten bedeuten?
@@ -66,41 +67,37 @@ Desweiteren ist algorithmishe Modell sparsam mit Daten und Berechnungen. Die Wä
 
 Um den oben beschriebenen Algorithmus zu testen und zu überprüfen, ob er unser Ziel der Lastspitzenvermeidung realisiert wurde eine Simualtionsumgebung entwickelt. Sie orientiert sich an Agenten basierten Simuationen, realisert aber Häuser und Leitzentrale nicht als selbstständige Software-Agenten/Programme.
 
-Es handelt sich um eine Simulation x Häusern. Die Wärmepumpen haben eine Leistung von x kW und einen mittleren cop von x. Der thermische Jahresenergiebedarf der Häuser ist  x kWh.
+Es handelt sich um eine Simulation mit 98 Häusern: jeweils 49 Häuser mit Trinkwarmwasserbedarf und Raumwärmebedarf. Die Wärmepumpen haben eine Leistung von 1 - 5 kW und einen mittleren COP von 4.9 (Trinkwarmwasser) und 6.9 (Raumwärme). Der thermische Jahresenergiebedarf der Häuser ist 115 500 kWh (Trinkwarmwasser) und 173 250 kWh (Raumwärme).
 
 Die Ergebnisse einer klassischen Hysterese-Regelung sehen wir hier
 
+![](./plots/plot_jay_simulation_not_dispatch_60min_49x2houses.png)
 
-hier plot von simulate.py mit dispatching = False
+Mittlere aggregierte Leistung: 194.4 kW
 
+Standardabweichung der aggregierten Leistung: 170.7 kW
 
-Mittlere aggregierte Leistung:
+Maximum der aggregierten Leistung: 783.1 kW
 
-Standardabweichung der aggregierten Leistung:
+Minimum der aggregierten Leistung: 0 kW
 
-Maximum der aggregierten Leistung:
-
-Minimum der aggregierten Leistung:
-
-90%-Qunatil der Aggregierten Leistung:
+90%-Qunatil der Aggregierten Leistung: 469.1 kW
 
 
 
 Die Ergebnisse Refelung mit Dispatching auf den rolling Mean sehen wir hier
 
+![](./plots/plot_jay_simulation_dispatch_60min_49x2houses.png)
 
-hier plot von simulate.py mit dispatching = True
+Mittlere aggregierte Leistung: 204.7 kW
 
+Standardabweichung der aggregierten Leistung: 149.3 kW
 
-Mittlere aggregierte Leistung:
+Maximum der aggregierten Leistung: 819.3 kW
 
-Standardabweichung der aggregierten Leistung:
+Minimum der aggregierten Leistung: 30.2 kW
 
-Maximum der aggregierten Leistung:
-
-Minimum der aggregierten Leistung:
-
-90%-Qunatil der Aggregierten Leistung:
+90%-Qunatil der Aggregierten Leistung: 433.7 kW
 
 ## Performance des Dispatching auf den Rolling Mean
 
@@ -126,18 +123,3 @@ Man sieht, dass der Algorithmus für sehr große Wärmepumpenschwärme geeignet 
 ## Fazit Simulation
 
 Die Simulationsergebnisse zeigen deutlich, dass durch Dispatching auf den Rolling Mean das Ziel der Peakvermeidung realisiert werden kann. Desweiteren stellt es eine Software technisch leicht umzusettende Lösung dar, welche gut in der Größe der Wärmepumpenschwärme skaliert.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
