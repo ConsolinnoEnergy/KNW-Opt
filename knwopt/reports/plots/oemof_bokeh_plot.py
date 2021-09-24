@@ -9,7 +9,7 @@ import pandas as pd
 
 # path to csv file or to directory containing csv files,
 # default: /KNW-OPT/knwopt/data/oemof_results
-CSV_PATH = os.path.join(os.getcwd(), "knwopt", "data", "oemof_results", "MAGGIE_1day_60min_spring_49x2houses.csv")
+CSV_PATH = os.path.join(os.getcwd(), "knwopt", "data", "oemof_results")
 
 # target directory to save plot as html file
 HTML_DIR = os.path.join(os.getcwd(), "knwopt", "reports", "plots")
