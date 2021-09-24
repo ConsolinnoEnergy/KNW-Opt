@@ -13,22 +13,22 @@ class House:
         "available"
         ]
     
-    def __init__(self, load:pd.Series):
-        self.load = load
-        self.cop = pd.Series([3.]*len(self.load), index=load.index)
-        self.power_electric = 3.
-        self.volume = 1.
-        self.T_min = 70
-        self.T_max = 80
-        self.count = 0
-        self.initial_level = 0.5
-        self.T = (self.T_max - self.T_min) * self.initial_level + self.T_min
-        self.heating = 0
-        self.min_run = 0.25
-        self.min_down = 0.25
-        self.endurance = self.min_down
-        self.external_signal = None
-        self.name="House"
+    def __init__(self, **kwargs):
+        self.load = kwargs["load"]
+        self.cop = kwargs.get("cop", pd.Series([3.]*len(self.load), index=self.load.index))
+        self.power_electric = kwargs.get("power_electric", 3.)
+        self.volume = kwargs.get("volume", 1.)
+        self.T_min = kwargs.get("T_min", 70)
+        self.T_max = kwargs.get("T_max", 80)
+        self.count = kwargs.get("count", 0)
+        self.initial_level = kwargs.get("initial_level", 0.5)
+        self.T = kwargs.get("T", (self.T_max - self.T_min) * self.initial_level + self.T_min)
+        self.heating = kwargs.get("heating", 0)
+        self.min_run = kwargs.get("min_run", 0.25)
+        self.min_down = kwargs.get("min_down", 0.25)
+        self.endurance = kwargs.get("endurance", self.min_down)
+        self.external_signal = kwargs.get("external_signal")
+        self.name = kwargs.get("name", "House")
         
     
     def reset(self):
