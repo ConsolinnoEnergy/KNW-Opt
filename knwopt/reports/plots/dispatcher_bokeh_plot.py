@@ -105,7 +105,10 @@ if __name__ == "__main__":
     else:
         csv_files = [file for file in os.listdir(CSV_PATH) if file.endswith(".csv")]
         for file in csv_files:
-            csv_name = pathlib.Path(file).stem
-            plot_filename = os.path.join(HTML_DIR, f"plot_{csv_name}")
-            csv_path = os.path.join(CSV_PATH, file)
-            create_html_plot(csv_path, plot_filename)
+            try:
+                csv_name = pathlib.Path(file).stem
+                plot_filename = os.path.join(HTML_DIR, f"plot_{csv_name}")
+                csv_path = os.path.join(CSV_PATH, file)
+                create_html_plot(csv_path, plot_filename)
+            except:
+                print(f"Could not plot dispatcher results from {file}. (Probably because it is not dispatcher result)")

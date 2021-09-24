@@ -217,11 +217,14 @@ if __name__ == "__main__":
     else:
         csv_files = [file for file in os.listdir(CSV_PATH) if file.endswith(".csv")]
         for file in csv_files:
-            csv_name = pathlib.Path(file).stem
-            csv_path = os.path.join(CSV_PATH, file)
-            if PLOT_NTP:
-                html_file = os.path.join(HTML_DIR, f"ntp_oemof_{csv_name}")
-                plot_ntp(csv_path, html_file)
-            if PLOT_HEPUS:
-                html_file = os.path.join(HTML_DIR, f"hepus_oemof_{csv_name}")
-                plot_hepus(csv_path, html_file)
+            try:
+                csv_name = pathlib.Path(file).stem
+                csv_path = os.path.join(CSV_PATH, file)
+                if PLOT_NTP:
+                    html_file = os.path.join(HTML_DIR, f"ntp_oemof_{csv_name}")
+                    plot_ntp(csv_path, html_file)
+                if PLOT_HEPUS:
+                    html_file = os.path.join(HTML_DIR, f"hepus_oemof_{csv_name}")
+                    plot_hepus(csv_path, html_file)
+            except:
+                print(f"Could not plot oemof results from {file}. (Probably because it is not oemof result)")
