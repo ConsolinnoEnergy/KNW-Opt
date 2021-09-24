@@ -17,7 +17,7 @@ def dispatcher(expected_power:float, portfolio:dict)->dict:
     problem = pulp.LpProblem("Energy_Deviation_Dispatching", pulp.LpMinimize)
     problem += (pulp.lpSum([portfolio[p]["max_power"] * x[p] for p in portfolio]) + up - down == deviation_power,"deviation of portfolio from expected power")
     problem += (up + down, "l1 deviation")
-    problem.solve(pulp.PULP_CBC_CMD(msg=0))
+    problem.solve(pulp.PULP_CBC_CMD(msg=0, threads=6))
     call = {}
     if problem.sol_status == pulp.LpSolutionOptimal or problem.sol_status == pulp.LpSolutionIntegerFeasible:
         for p in portfolio:
