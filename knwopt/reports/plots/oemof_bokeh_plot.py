@@ -25,7 +25,7 @@ NTP_LABEL = "pubgel"
 
 # plot hepu output with rolling mean and amount of examplary
 # hepus stated in `AMOUNT_HEPUS`
-PLOT_HEPUS = True
+PLOT_HEPUS = False
 AMOUNT_HEPUS = 5
 # labels of hepus are like (explanation see ASSIST_LABEL)
 HEPUS_LABEL = "HePu"
