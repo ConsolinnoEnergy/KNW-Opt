@@ -99,6 +99,17 @@ Minimum der aggregierten Leistung: 30.2 kW
 
 90%-Qunatil der Aggregierten Leistung: 433.7 kW
 
+dispatch 
+Bh: 1272.3947368421052
+Maximum: 38.0
+Verrechnungswirkarbeit: 48351.0
+
+
+no_dispatch 
+Bh: 671.0277777777778
+Maximum: 72.0
+Verrechnungswirkarbeit: 48314.0
+
 ## Performance des Dispatching auf den Rolling Mean
 
 Es wurde eine Performanzanalyse des Dispatching algorithmus durchgeführt:
