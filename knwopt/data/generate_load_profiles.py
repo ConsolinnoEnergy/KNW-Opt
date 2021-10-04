@@ -1,3 +1,5 @@
+"""Generates new load profiles statistically from given loadprofiles"""
+
 from copy import deepcopy
 import os
 
