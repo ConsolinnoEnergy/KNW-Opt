@@ -86,7 +86,7 @@ class Swarm:
     def _calculate_expected_power(self):
         m = 0.
         for house in self.houses:
-            m += (house.load / house.cop)[max(house.count -24,0):house.count + 1].mean()
+            m += (house.load / house.cop)[max(house.count - int(np.ceil(24 / house.tau)) ,0):house.count + 1].mean()
         return m
 
 
