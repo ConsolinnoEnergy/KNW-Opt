@@ -8,11 +8,10 @@ import pandas as pd
 
 
 # path to csv file or to directory containing csv files,
-# default: /KNW-OPT/knwopt/data/oemof_results
-CSV_PATH = os.path.join(os.getcwd(), "knwopt", "data", "oemof_results")
+CSV_PATH = os.path.join(os.getcwd(), "knwopt", "data", "oemof_results", "solution_MAGGIE_1_day_steps_hepus_49.csv")
 
 # target directory to save plot as html file
-HTML_DIR = os.path.join(os.getcwd(), "knwopt", "reports", "plots")
+HTML_DIR = os.path.join(os.getcwd())#, "knwopt", "reports", "plots")
 
 # how thermal assists are approximately named. E.g. if you assists are named Assth-1, Assth_busth1, ...
 # then ASSIST_LABEL = "Assth" (ASSIST_LABEL should be always in your assist names)
@@ -21,12 +20,12 @@ ASSIST_LABEL = "Assth"
 # plot ntp output with rolling mean
 PLOT_NTP = True
 # labels of NTPel is/are like (explanation see ASSIST_LABEL)
-NTP_LABEL = "pubgel"
+NTP_LABEL = "ntp_el"
 
 # plot hepu output with rolling mean and amount of examplary
 # hepus stated in `AMOUNT_HEPUS`
 PLOT_HEPUS = False
-AMOUNT_HEPUS = 5
+AMOUNT_HEPUS = 3
 # labels of hepus are like (explanation see ASSIST_LABEL)
 HEPUS_LABEL = "HePu"
 
@@ -42,6 +41,7 @@ def plot_ntp(csv_file: str, plot_filename: str):
     """
     # load data
     df = pd.read_csv(csv_file, index_col=0)
+    df.index = pd.date_range(start="2021-01-01", freq="60Min", periods=365 * 24)
     try:
         df.index = pd.to_datetime(df.index)
     except:
@@ -61,7 +61,7 @@ def plot_ntp(csv_file: str, plot_filename: str):
 
     # declare bokeh figure
     ntp_fig = figure(
-        title="Systemanalyse: Flexibilität",
+        title="Oemof Dispatcher",
         sizing_mode="stretch_width",
         background_fill_color="#fafafa",
         x_axis_type="datetime",
@@ -88,7 +88,7 @@ def plot_ntp(csv_file: str, plot_filename: str):
     )"""
 
     # plot assists if exists
-    if not ass_th.empty:
+    if any(ass_th):
         ntp_fig.step(
             df.index,
             list(ass_th),
@@ -102,9 +102,9 @@ def plot_ntp(csv_file: str, plot_filename: str):
     ntp_fig.legend.location = "top_center"
 
     # save as html file
-    output_file(plot_filename + ".html", title="Systemanalyse: Flexibilität")
+    output_file(plot_filename + ".html", title="Oemof Dispatcher")
     save(ntp_fig, plot_filename + ".html")
-    export_png(ntp_fig, filename=plot_filename + ".png")
+    # export_png(ntp_fig, filename=plot_filename + ".png")
 
 
 def plot_hepus(csv_file: str, plot_filename: str):
@@ -187,7 +187,7 @@ def plot_hepus(csv_file: str, plot_filename: str):
         )
 
     # plot assists if exists
-    if not ass_th.empty:
+    if any(ass_th):
         heatpumps_fig.step(
             df.index,
             ass_th,
@@ -203,16 +203,16 @@ def plot_hepus(csv_file: str, plot_filename: str):
     # save as html file
     output_file(plot_filename + ".html", title="Systemanalyse: Flexibilität")
     save(heatpumps_fig, plot_filename + ".html")
-    export_png(heatpumps_fig, filename=plot_filename + ".png")
+    # export_png(heatpumps_fig, filename=plot_filename + ".png")
 
 if __name__ == "__main__":
     if os.path.isfile(CSV_PATH):
         csv_name = pathlib.Path(CSV_PATH).stem
         if PLOT_NTP:
-            html_file = os.path.join(HTML_DIR, f"ntp_oemof_{csv_name}.html")
+            html_file = os.path.join(HTML_DIR, f"ntp_oemof_{csv_name}")
             plot_ntp(CSV_PATH, html_file)
         if PLOT_HEPUS:
-            html_file = os.path.join(HTML_DIR, f"hepus_oemof_{csv_name}.html")
+            html_file = os.path.join(HTML_DIR, f"hepus_oemof_{csv_name}")
             plot_hepus(CSV_PATH, html_file)
     else:
         csv_files = [file for file in os.listdir(CSV_PATH) if file.endswith(".csv")]
