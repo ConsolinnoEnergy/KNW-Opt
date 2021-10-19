@@ -113,6 +113,19 @@ class House:
     @property
     def potential(self):
         return {"max_power": self.power_electric, "power": self.power_expected, "available": self.available}
+    
+    @property
+    def flexibility(self):
+        neg = 0.
+        pos = 0.
+        if self.available:
+            if bool(self.power_expected):
+                pos = self.power_electric 
+                neg = 0.
+            else:
+                pos = 0.
+                neg = self.power_electric 
+        return {'power': self.power_expected, 'positive_flexibility': pos, 'negative_flexibility': neg }
 
     def policy(self):
         if self.available and not self.external_signal is None:
