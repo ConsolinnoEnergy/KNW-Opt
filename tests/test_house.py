@@ -7,7 +7,7 @@ class HouseTest(unittest.TestCase):
     def test_house_constructor(self):
         """test constructor of house defaults, properties and the fallback policy
         """
-        house = House(
+        house = House(load=
             pd.Series(
                 [5]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                 )
@@ -29,7 +29,7 @@ class HouseTest(unittest.TestCase):
         """test the integration of an external signal
         """
         house = House(
-            pd.Series(
+            load=pd.Series(
                 [5]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                 )
             )
@@ -45,7 +45,7 @@ class HouseTest(unittest.TestCase):
         """test pdstate
         """
         house = House(
-            pd.Series(
+            load = pd.Series(
                 [5]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                 )
             )
@@ -59,7 +59,7 @@ class HouseTest(unittest.TestCase):
         """test the potential
         """
         house = House(
-            pd.Series(
+            load = pd.Series(
                 [5]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                 )
             )

@@ -12,7 +12,7 @@ class SwarmTest(unittest.TestCase):
         for i in range(3):
             houses.append(
                 House(
-                    pd.Series(
+                    load= pd.Series(
                         [5]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                         )
                     )
@@ -32,7 +32,7 @@ class SwarmTest(unittest.TestCase):
         for i in range(3):
             houses.append(
                 House(
-                    pd.Series(
+                    load = pd.Series(
                         [5]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                         )
                     )
@@ -53,7 +53,7 @@ class SwarmTest(unittest.TestCase):
         houses = []
         for i in range(3):
             house = House(
-                    pd.Series(
+                    load = pd.Series(
                         [5.]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                         )
                     )
@@ -70,7 +70,7 @@ class SwarmTest(unittest.TestCase):
         houses = []
         for i in range(3):
             house = House(
-                    pd.Series(
+                    load = pd.Series(
                         [5.]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                         )
                     )
@@ -89,7 +89,7 @@ class SwarmTest(unittest.TestCase):
         houses = []
         for i in range(3):
             house = House(
-                    pd.Series(
+                    load = pd.Series(
                         [5.]*24,index = pd.date_range(start='2021-01-01',end='2021-01-01 23:00',freq= '1H')
                         )
                     )
@@ -109,7 +109,7 @@ class SwarmTest(unittest.TestCase):
         houses = []
         for i in range(100):
             house = House(
-                    pd.Series(
+                    load =  pd.Series(
                         [5]*24,index = pd.date_range(start='2021-01-01', periods=24, freq= '30Min')
                         )
                     )
