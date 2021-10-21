@@ -31,6 +31,7 @@ class House:
         self.endurance = self.initial_endurance
         self.external_signal = kwargs.get("external_signal")
         self.name = kwargs.get("name", "House")
+        self.availability_margin = kwargs.get("availability_margin", 1.)
         
     
     def reset(self):
@@ -91,7 +92,7 @@ class House:
     @property
     def available(self):
         available = True
-        if (self.T < self.T_min) or (self.T > self.T_max):
+        if (self.T < (self.T_min - self.availability_margin )) or (self.T > (self.T_max + self.availability_margin)):
             available = False
         else:
             if self.heating!=0.:
