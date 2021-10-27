@@ -14,7 +14,7 @@ class House:
         ]
     
     def __init__(self, **kwargs):
-        self.load = kwargs["load"]
+        self.load = kwargs.get('load',pd.Series([3.]*24, index = pd.date_range(start='2021-10-10',periods=24,freq="H")))
         self.cop = kwargs.get("cop", pd.Series([3.]*len(self.load), index=self.load.index))
         self.power_electric = kwargs.get("power_electric", 3.)
         self.volume = kwargs.get("volume", 1.)
