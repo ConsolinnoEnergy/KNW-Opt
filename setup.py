@@ -9,7 +9,6 @@ setup(
     license="MIT License",
     packages=find_packages(),
     install_requires=[
-        'unittest',
         'pandas',
         'pulp',
         'numpy'
